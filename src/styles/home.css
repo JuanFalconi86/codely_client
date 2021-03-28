@@ -1,0 +1,16 @@
+* {
+    
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: calibri;
+    width: 100%;
+    height: 100vh;
+    background-image: url(./../pages/poductbg.png);
+    background-size: cover;
+    background-position: top left;
+
+}

@@ -18,11 +18,12 @@ const NavMain = (props) => {
         console.log(error);
       });
   }
+  
 
   return (
     <nav className="NavMain">
       <NavLink exact to="/">
-        <h3 className="logo">App name</h3>
+        <img src='./codely-vector.png' className ="logo" alt="logo"/>
       </NavLink>
       <ul className="nav-list">
         {context.isLoggedIn && (
@@ -39,11 +40,11 @@ const NavMain = (props) => {
         )}
         {!context.isLoggedIn && (
           <React.Fragment>
-            <li>
-              <NavLink to="/signin">Log in</NavLink>
+            <li className="auth">
+              <NavLink to="/signin">Sign In</NavLink>
             </li>
-            <li>
-              <NavLink to="/signup">Create account</NavLink>
+            <li className="auth">
+              <NavLink to="/signup">Sign Up</NavLink>
             </li>
           </React.Fragment>
         )}
