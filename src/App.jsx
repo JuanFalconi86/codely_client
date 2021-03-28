@@ -10,6 +10,8 @@ import ApplicationDetails from "./components/Applications/ApplicationDetails"
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Main from "./pages/Main"
+import FormApplications from "./components/Forms/FormApplications"
+import EditApplications from "./components/Forms/EditApplications"
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route exact path="/technologies" component={Technologies} /> */}
         <Route exact path="/applications/:id" component={ApplicationDetails} />
         <Route exact path="/main" component={Main} />
+        <Route exact path="/application/create" component={FormApplications} />
+        <Route exact path="/application/edit/:id" component={EditApplications} />
         <ProtectedRoute exact path="/profile" component={Profile} />
       </Switch>
     </div>

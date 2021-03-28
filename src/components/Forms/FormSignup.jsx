@@ -96,7 +96,7 @@ class FormSignup extends Component {
         <input
           onChange={this.handleChange}
           value={this.state.representativePhotoUrl}
-          type="text"
+          type="file"
           id="representativePhotoUrl"
           name="representativePhotoUrl"
         />
