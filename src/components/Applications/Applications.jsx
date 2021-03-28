@@ -63,7 +63,7 @@ class Applications extends React.Component {
         </div>
         <div>
           Hello
-          <ApplicationDetails/>
+          {/* <ApplicationDetails/> */}
         </div>
       </div>
     );
