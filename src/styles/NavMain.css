@@ -5,11 +5,30 @@
   align-items: center;
   padding: 20px;
   height: 70px;
+  box-shadow: 2px 2px 20px rgba(90, 118, 253, 0.13);
+  z-index: 1;
 }
 
 .NavMain .nav-list {
   margin-left: auto;
   display: flex;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #2c387e;
+}
+
+.auth{
+  padding: 5px;
+}
+.auth:hover {
+background-color: #5a76fd;
+color: #ffffff;
+box-shadow: 5px 10px 30px rgba(90, 118, 253, 0,5);
+
+border: transparent;
+border-radius: 5px;
 }
 
 .NavMain .nav-list li:not(:last-child) {
