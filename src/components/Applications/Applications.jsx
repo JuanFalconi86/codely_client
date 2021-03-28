@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Search from "../Search"
 import ApplicationDetails from "./ApplicationDetails";
+
 
 // not used yet
 import "../../styles/applications.css"
@@ -9,7 +11,12 @@ import "../../styles/applications.css"
 class Applications extends React.Component {
   state = {
     applications: [],
+    searchValue: '',
     company: null
+  };
+
+  handleSearch = (_, value) => {
+    this.setState({ searchValue: value });
   };
 
   componentDidMount() {
@@ -31,9 +38,18 @@ class Applications extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>
-        {this.state.applications.map((application) => (
+      <div style={{paddingTop:"12px"}}>
+        <Search
+          handleSearch={this.handleSearch}
+          searchValue={this.state.searchValue}
+        />
+        {this.state.applications
+              .filter((application) =>
+                application.appName
+                  .toLowerCase()
+                  .includes(this.state.searchValue.toLowerCase())
+              )
+        .map((application) => (
           <Link style={{ textDecoration: 'none', color:"black"}} key={application._id} to={`/applications/${application._id}`}>
           <div style={{ padding: "12px 12px 0 12px"}}>
             <div
@@ -60,11 +76,6 @@ class Applications extends React.Component {
           </div>
           </Link>
         ))}
-        </div>
-        <div>
-          Hello
-          <ApplicationDetails/>
-        </div>
       </div>
     );
   }

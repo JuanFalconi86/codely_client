@@ -14,7 +14,7 @@ export class Main extends Component {
           borderBottom: "none",
         }}
       >
-        <div style={{borderBottom:"1px solid #C4C4C4"}}>
+        <div style={{borderBottom:"1px solid #C4C4C4", padding:"12px"}}>
           <p >Select a Technology</p>
 
           <Technologies />
@@ -23,10 +23,9 @@ export class Main extends Component {
           <div style={{borderRight: "1px solid #C4C4C4"}}>
             <Applications />
           </div>
-          {/* <div style={{borderTop:"1px solid #C4C4C4",  borderTop: "none",  padding:"12px", width:"80%"}}>
-            blabla
-            <ApplicationDetails/> 
-          </div> */}
+          <div style={{borderTop:"1px solid #C4C4C4",  borderTop: "none",  padding:"12px", width:"80%"}}>
+           How to display company details here instead of in a new window?
+          </div>
         </div>
       </div>
     

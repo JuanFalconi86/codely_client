@@ -25,6 +25,13 @@ class ApplicationDetails extends React.Component {
       // J'ai essayé de AppsModel.find().populate("proprietaryCompany") but it gives an error
   
     }
+
+    // componentDidUpdate(prevProps) {
+    //   // Typical usage (don't forget to compare props):
+    //   if (this.props.id !== prevProps.id) {
+    //     this.fetchData(this.props.id);
+    //   }
+    // }
   
     render() {
       if (this.state.application === null) {
