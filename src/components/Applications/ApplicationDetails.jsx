@@ -87,6 +87,16 @@ class ApplicationDetails extends React.Component {
               </div>
             </div>
             <p>{this.state.application.appDescription}</p>
+            <div>
+              <br/>
+              <h3 style={{fontSize:"1em"}}>Technologies used to develop {this.state.application.appName}:</h3>
+              <br/>
+              {this.state.application.technology.map((tech) => {
+                console.log(tech)
+                return <p>{tech}</p> 
+
+              })}
+            </div>
           </div>
       );
     }

@@ -10,7 +10,7 @@ const Search = (props) => {
       type="text"
       placeholder="Search..."
       value={searchValue}
-      onChange={handleSearch}
+      onChange={(event) => handleSearch(event, event.target.value)}
     />
   );
 };

@@ -93,7 +93,6 @@ export class Main extends Component {
               width: "80%",
             }}
           >
-            How to display company details here instead of in a new window?
             <Route
               exact
               path="/applications/:id"
