@@ -13,11 +13,14 @@ class Applications extends React.Component {
     applications: [],
     searchValue: '',
     company: null
+    
+   
   };
 
   handleSearch = (_, value) => {
     this.setState({ searchValue: value });
   };
+
 
   componentDidMount() {
     axios
@@ -36,20 +39,25 @@ class Applications extends React.Component {
 
   }
 
+
   render() {
+
     return (
       <div style={{paddingTop:"12px"}}>
+
+      
         <Search
           handleSearch={this.handleSearch}
           searchValue={this.state.searchValue}
         />
         {this.state.applications
               .filter((application) =>
-                application.appName
-                  .toLowerCase()
-                  .includes(this.state.searchValue.toLowerCase())
-              )
+                 application.appName
+                   .toLowerCase()
+                   .includes(this.state.searchValue.toLowerCase())
+               )
         .map((application) => (
+          
           <Link style={{ textDecoration: 'none', color:"black"}} key={application._id} to={`/applications/${application._id}`}>
           <div style={{ padding: "12px 12px 0 12px"}}>
             <div
@@ -75,7 +83,8 @@ class Applications extends React.Component {
             </div>
           </div>
           </Link>
-        ))}
+        ))} 
+        
       </div>
     );
   }

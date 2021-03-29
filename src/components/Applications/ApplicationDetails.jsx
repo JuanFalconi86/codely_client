@@ -4,6 +4,7 @@ import axios from "axios";
 class ApplicationDetails extends React.Component {
     state = {
       application: null,
+      _id:""
     };
   
     componentDidMount() {
@@ -26,17 +27,42 @@ class ApplicationDetails extends React.Component {
   
     }
 
-    // componentDidUpdate(prevProps) {
-    //   // Typical usage (don't forget to compare props):
-    //   if (this.props.id !== prevProps.id) {
-    //     this.fetchData(this.props.id);
-    //   }
-    // }
+    componentDidUpdate(prevProps) {
+
+      const id = this.props.match.params.id;
+
+     //code de Franck
+      if (this.props.match.params.id !== prevProps.match.params.id) {
+        console.log("hello")
+
+   
+      // if (this.props.match.params.id !== prevProps.matpropsch.params.id) {
+      //   console.log("hello")
+   
+        axios
+        .get(`http://localhost:7000/api/applications/${id}`)
+        .then((response) => {
+          this.setState({ application: response.data });
+          console.log("HERE IS THE RESPONSE", response)
+          
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      }
+
+// console.log("PREVSTATE", prevState)
+// console.log("ID IS HERE", this.state.application._id)
+// console.log("PREVMATCH", prevState.match.params.id)
+
+    }
+
   
     render() {
       if (this.state.application === null) {
-        return <div>Loading the application details...</div>;
-      }
+    return <div>Loading the application details...</div>;
+       }
 
       return (
         <div style={{ padding: "12px 12px 0 12px"}}>
@@ -65,6 +91,6 @@ class ApplicationDetails extends React.Component {
       );
     }
   }
-  
+
   export default ApplicationDetails;
   
