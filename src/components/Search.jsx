@@ -1,6 +1,5 @@
 import React from 'react';
-import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const Search = (props) => {
   const { searchValue, handleSearch } = props;
