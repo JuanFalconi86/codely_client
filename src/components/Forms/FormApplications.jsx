@@ -9,35 +9,35 @@ class FormApplications extends Component {
       "https://res.cloudinary.com/djogypr9r/image/upload/v1616695400/app-default_s975ja.jpg",
     appDescription: "",
     technology: [], //une array vide, qui ensuite va contenir la liste des technologies
+    technologySelected: [],
     appCategory: "Books",
   };
 
-    componentDidMount() {
-      axios
-        .get("http://localhost:7000/api/technologies")
-        .then((response) => {
-          this.setState({ technology: response.data });
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+  componentDidMount() {
+    axios
+      .get("http://localhost:7000/api/technologies")
+      .then((response) => {
+        this.setState({ technology: response.data });
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-//   componentDidMount() {
-//     axios
-//       .get("http://localhost:7000/api/applications/create")
-//       .then((response) => {
-//         this.setState({ technology: response.data });
-//         console.log(response.data);
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   }
+
 
   handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === "technology") {
+       let value = Array.from(
+         event.target.selectedOptions,
+         (option) => option.value
+       );
+       this.setState({ technologySelected: value }); 
+      console.log(event.target)
+    } else {
+      this.setState({ [event.target.name]: event.target.value });
+    }
   };
 
   formSubmit = (event) => {
@@ -48,7 +48,7 @@ class FormApplications extends Component {
         appName: this.state.appName,
         appLogo: this.state.appLogo,
         appDescription: this.state.appDescription,
-        technology: this.state.technology,
+        technology: this.state.technologySelected,
         appCategory: this.state.appCategory,
       })
       .then((response) => {
@@ -57,6 +57,7 @@ class FormApplications extends Component {
           appLogo: "",
           appDescription: "",
           technology: [],
+          technologySelected: [],
           appCategory: "Books",
         });
         this.props.history.push("/");
@@ -67,6 +68,7 @@ class FormApplications extends Component {
   };
 
   render() {
+    console.log(this.state.technologySelected);
     return (
       <div>
         <header>
@@ -107,19 +109,20 @@ class FormApplications extends Component {
             name="technology"
             id="technology"
             onChange={this.handleChange}
-            value={this.state.technology}
-            multiple
+            value={this.state.technologySelected}
+            multiple="true"
           >
+              {/* <option value="Javascript">Javascript</option>
+              <option value="MongoDB">MongoDB</option> */}
             {this.state.technology.map((oneTechnology) => {
-              return (
-                <option value={oneTechnology.name} key={oneTechnology._id}>
+             return  (
+                <option value={oneTechnology._id} key={oneTechnology._id}>
                   {oneTechnology.name}
                 </option>
               );
             })}
           </select>
           ;
-          
           <br />
           <label htmlFor="appCategory">App Category</label> <br />
           <select

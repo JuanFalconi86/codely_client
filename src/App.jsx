@@ -23,15 +23,14 @@ function App() {
         <Route exact path="/signup" component={Signup} />
         {/* <Route exact path="/applications/:id" component={ApplicationDetails} />  */}
         {/* <Route exact path="/main" component={Main} /> */}
-
-        <Main />
-
         <Route exact path="/application/create" component={FormApplications} />
         <Route
           exact
           path="/application/edit/:id"
           component={EditApplications}
         />
+        <Main />
+
         <ProtectedRoute exact path="/profile" component={Profile} />
       </Switch>
     </div>
