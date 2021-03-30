@@ -83,7 +83,7 @@ class ApplicationDetails extends React.Component {
               <div style={{paddingLeft:"12px"}}>
                 <h2 style={{fontSize:"40px", margin:"0", padding:"0"}}>{this.state.application.appName}</h2>
                 <p style={{fontSize:"20px", paddingTop: 0}}>{this.state.application.appCategory}</p>
-                <p style={{fontSize:"15px"}}>{this.state.application.proprietaryCompany}</p>
+                <p style={{fontSize:"15px"}}>{this.state.application.proprietaryCompany && this.state.application.proprietaryCompany.companyName}</p>
               </div>
             </div>
             <p>{this.state.application.appDescription}</p>
@@ -91,11 +91,14 @@ class ApplicationDetails extends React.Component {
               <br/>
               <h3 style={{fontSize:"1em"}}>Technologies used to develop {this.state.application.appName}:</h3>
               <br/>
-              {this.state.application.technology.map((tech) => {
-                console.log(tech)
-                return <p>{tech}</p> 
-
-              })}
+              <div style={{display:"flex", flexWrap:"wrap"}}>
+        {this.state.application.technology.map((technology) => (
+          <div style={{width:"60px", display:"flex", flexDirection:"column", alignItems:"center"}}>
+            <img style={{height:"40px", width:"40px"}} src={technology.logo} alt="" />
+            <p style={{fontSize:"0.7em"}}>{technology.name}</p>
+          </div>
+        ))}
+      </div>
             </div>
           </div>
       );

@@ -78,7 +78,7 @@ class Applications extends React.Component {
               <div style={{paddingLeft:"12px"}}>
                 <h2>{application.appName}</h2>
                 <p>{application.appCategory}</p>
-                <p style={{fontSize:"11px"}}>{application.proprietaryCompany}</p>
+                <p style={{fontSize:"11px"}}>{application.proprietaryCompany && application.proprietaryCompany.companyName}</p>
               </div>
             </div>
           </div>
