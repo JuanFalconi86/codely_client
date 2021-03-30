@@ -45,7 +45,7 @@ class Home extends React.Component {
        
 			<div>
       <section className="solutions">
-          <div class="solutions-heading">
+          <div className="solutions-heading">
             <h2>How Codely help you as a tech job seeker?</h2>
           </div>
         </section>
