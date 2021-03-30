@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import '../../styles/formApplications.css'
+import {buildFormData} from "../../utile.js"
 
 class FormApplications extends Component {
   state = {
@@ -53,12 +54,17 @@ class FormApplications extends Component {
     event.preventDefault();
     const formData = new FormData();
 
-    formData.append("appName", this.state.appName);
-    formData.append("appLogo", this.state.appLogo);
-    formData.append("appDescription", this.state.appDescription);
-    formData.append("technology", this.state.technologySelected);
-    formData.append("appCategory", this.state.appCategory);
-    console.log(formData);
+    // NORMALEMENT, QUAND ON UPLOAD UNE IMAGE, ON UTILISE UNE FORM DATA ET APPEND
+    // formData.append("appName", this.state.appName);
+    // formData.append("appLogo", this.state.appLogo);
+    // formData.append("appDescription", this.state.appDescription);
+    // formData.append("technology", this.state.technologySelected);
+    // formData.append("appCategory", this.state.appCategory);
+    // console.log(formData);
+
+    // MAIS DANS CE CAS, COMME J'AI UNE ARRAY DE TECHNOLOGIES, JE DOIS UTILISER CETTE FONCTION BUILD FORM DATA, QUI ELLE MEME EST IMPORTEE DE MON FICHIER UTILE
+    buildFormData(formData, this.state)
+
     axios
       .post("http://localhost:7000/api/application/create", formData)
       .then((response) => {
@@ -75,7 +81,7 @@ class FormApplications extends Component {
         console.log(formData)
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error, "ERROR, NOSE BLEED");
       });
   };
 
@@ -87,7 +93,7 @@ class FormApplications extends Component {
         </header>
 
         <form onSubmit={this.formSubmit} className="app-form">
-          <label htmlFor="appName"> Name</label> <br />
+          <label htmlFor="appName"> Name (required) </label> <br />
           <input
             id="appName"
             type="text"
@@ -96,7 +102,7 @@ class FormApplications extends Component {
             value={this.state.appName}
           />
           <br />
-          <label htmlFor="appLogo"> Logo</label> <br />
+          <label htmlFor="appLogo"> Logo (required)</label> <br />
           <input
             id="appLogo"
             type="file"
@@ -105,7 +111,7 @@ class FormApplications extends Component {
             // value={this.state.appLogo}
           />
           <br />
-          <label htmlFor="appDescription">Description</label> <br />
+          <label htmlFor="appDescription">Description (required)</label> <br />
           <input
             id="appDescription"
             type="text"
@@ -115,14 +121,14 @@ class FormApplications extends Component {
     
           />
           <br />
-          <label htmlFor="technology">Technology</label> <br />
+          <label htmlFor="technology">Technology (required)</label> <br />
           {/* <select name="technology" id="technology" onChange={this.handleChange} value={this.state.technology} multiple> */}
           <select
             name="technology"
             id="technology"
             onChange={this.handleChange}
             value={this.state.technologySelected}
-            multiple="true"
+            multiple={true}
           >
             {/* <option value="Javascript">Javascript</option>
               <option value="MongoDB">MongoDB</option> */}
@@ -136,7 +142,7 @@ class FormApplications extends Component {
           </select>
           ;
           <br />
-          <label htmlFor="appCategory">App Category</label> <br />
+          <label htmlFor="appCategory">App Category (required)</label> <br />
           <select
             name="appCategory"
             id="appCategory"
