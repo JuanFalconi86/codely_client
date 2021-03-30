@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Main from "./pages/Main";
 import FormApplications from "./components/Forms/FormApplications";
 import EditApplications from "./components/Forms/EditApplications";
+import OneCompany from './components/Companies/OneCompany.jsx'
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           path="/application/edit/:id"
           component={EditApplications}
         />
+        <Route exact path="/company/:id" component={OneCompany}/>
         <Main />
 
         <ProtectedRoute exact path="/profile" component={Profile} />
