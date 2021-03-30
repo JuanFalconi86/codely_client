@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import '../../styles/formApplications.css'
 
 class FormApplications extends Component {
   state = {
     appName: "",
-    appLogo:
-      "https://res.cloudinary.com/djogypr9r/image/upload/v1616695400/app-default_s975ja.jpg",
+    appLogo: "",
     appDescription: "",
     technology: [], //une array vide, qui ensuite va contenir la liste des technologies
     technologySelected: [],
@@ -26,7 +26,7 @@ class FormApplications extends Component {
   }
 
 
-
+  // FONCTION POUR HANDLE CHANGE LES INPUTS DU FORMULAIRE
   handleChange = (event) => {
     if (event.target.name === "technology") {
        let value = Array.from(
@@ -40,17 +40,27 @@ class FormApplications extends Component {
     }
   };
 
+  //FONCTION POUR UPDATE LE STATE DU LOGO AVEC UN FICHIER IMAGE CHOISI DU LOCAL:
+  handleLogoUpload = (event) =>{
+      console.log(event.target.files[0]);
+      this.setState({
+          appLogo: event.target.files[0]
+      })
+  }
+
+  // FONCTION POUR SUBMIT LE FORMULAIRE
   formSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData();
 
+    formData.append("appName", this.state.appName);
+    formData.append("appLogo", this.state.appLogo);
+    formData.append("appDescription", this.state.appDescription);
+    formData.append("technology", this.state.technologySelected);
+    formData.append("appCategory", this.state.appCategory);
+    console.log(formData);
     axios
-      .post("http://localhost:7000/api/application/create", {
-        appName: this.state.appName,
-        appLogo: this.state.appLogo,
-        appDescription: this.state.appDescription,
-        technology: this.state.technologySelected,
-        appCategory: this.state.appCategory,
-      })
+      .post("http://localhost:7000/api/application/create", formData)
       .then((response) => {
         this.setState({
           appName: "",
@@ -60,7 +70,9 @@ class FormApplications extends Component {
           technologySelected: [],
           appCategory: "Books",
         });
-        this.props.history.push("/");
+        this.props.history.push("/main");
+        console.log("NEW APPLICATION CREATED");
+        console.log(formData)
       })
       .catch((error) => {
         console.log(error);
@@ -68,14 +80,13 @@ class FormApplications extends Component {
   };
 
   render() {
-    console.log(this.state.technologySelected);
     return (
-      <div>
+      <div className="app-form-container">
         <header>
           <h1>Create new Application</h1> <br />
         </header>
 
-        <form onSubmit={this.formSubmit}>
+        <form onSubmit={this.formSubmit} className="app-form">
           <label htmlFor="appName"> Name</label> <br />
           <input
             id="appName"
@@ -88,10 +99,10 @@ class FormApplications extends Component {
           <label htmlFor="appLogo"> Logo</label> <br />
           <input
             id="appLogo"
-            type="text"
+            type="file"
             name="appLogo"
-            onChange={this.handleChange}
-            value={this.state.appLogo}
+            onChange={this.handleLogoUpload}
+            // value={this.state.appLogo}
           />
           <br />
           <label htmlFor="appDescription">Description</label> <br />
@@ -101,6 +112,7 @@ class FormApplications extends Component {
             name="appDescription"
             onChange={this.handleChange}
             value={this.state.appDescription}
+    
           />
           <br />
           <label htmlFor="technology">Technology</label> <br />
@@ -112,10 +124,10 @@ class FormApplications extends Component {
             value={this.state.technologySelected}
             multiple="true"
           >
-              {/* <option value="Javascript">Javascript</option>
+            {/* <option value="Javascript">Javascript</option>
               <option value="MongoDB">MongoDB</option> */}
             {this.state.technology.map((oneTechnology) => {
-             return  (
+              return (
                 <option value={oneTechnology._id} key={oneTechnology._id}>
                   {oneTechnology.name}
                 </option>

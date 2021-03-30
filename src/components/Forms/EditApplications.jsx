@@ -3,13 +3,13 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 
 class EditApplications extends Component {
-
   state = {
     appName: "",
     appLogo:
       "https://res.cloudinary.com/djogypr9r/image/upload/v1616695400/app-default_s975ja.jpg",
     appDescription: "",
     technology: [], //une array vide, qui ensuite va contenir la liste des technologies
+    technologySelected: [],
     appCategory: "Books",
   };
 
@@ -17,46 +17,58 @@ class EditApplications extends Component {
     console.log(this.props);
     const id = this.props.match.params.id;
 
-    axios.get(`http://localhost:7000/api/applications/${id}`)
-    .then((response)=>{
+    axios
+      .get(`http://localhost:7000/api/applications/${id}`)
+      .then((response) => {
         const data = response.data;
 
         this.setState({
-            appName: data.appName,
-            appLogo: data.appLogo,
-            appDescription: data.appDescription,
-            technology: data.technology,
-            appCategory: data.appCategory,
-        })
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
+          appName: data.appName,
+          appLogo: data.appLogo,
+          appDescription: data.appDescription,
+          technology: data.technology,
+          appCategory: data.appCategory,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
+  //   handleChange = (event) => {
+  //     this.setState({ [event.target.name]: event.target.value });
+  //   };
   handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === "technology") {
+      let value = Array.from(
+        event.target.selectedOptions,
+        (option) => option.value
+      );
+      this.setState({ technologySelected: value });
+      console.log(event.target);
+    } else {
+      this.setState({ [event.target.name]: event.target.value });
+    }
   };
 
   editSubmit = (event) => {
-      event.preventDefault();
-      const id = this.props.match.params.id;
-      axios.patch(`http://localhost:7000/api/applications/${id}`, {
+    event.preventDefault();
+    const id = this.props.match.params.id;
+    axios
+      .patch(`http://localhost:7000/api/applications/${id}`, {
         appName: this.state.appName,
         appLogo: this.state.appLogo,
         appDescription: this.state.appDescription,
-        technology: this.state.technology,
+        technology: this.state.technologySelected,
         appCategory: this.state.appCategory,
       })
-      .then((response)=>{
-          this.props.history.push('/')
+      .then((response) => {
+        this.props.history.push("/");
       })
-      .catch((error)=>{
-          console.log(error)
-      })
-  }
-
-
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   render() {
     return (
@@ -99,12 +111,12 @@ class EditApplications extends Component {
             name="technology"
             id="technology"
             onChange={this.handleChange}
-            value={this.state.technology}
-            multiple
+            value={this.state.technologySelected}
+            multiple="true"
           >
             {this.state.technology.map((oneTechnology) => {
               return (
-                <option value={oneTechnology.name} key={oneTechnology._id}>
+                <option value={oneTechnology._id} key={oneTechnology._id}>
                   {oneTechnology.name}
                 </option>
               );
