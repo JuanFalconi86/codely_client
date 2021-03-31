@@ -15,7 +15,7 @@ import EditApplications from "./components/Forms/EditApplications";
 import OneCompany from './components/Companies/OneCompany.jsx';
 
 function App() {
-  const isAuth = useState(false);
+  const isAuth = useState(true);
 
   return (
 

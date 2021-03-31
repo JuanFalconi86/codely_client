@@ -14,6 +14,7 @@ class FormApplications extends Component {
     appCategory: "Books",
   };
 
+    // ICI, JE FAIS UN CALL AXIOS POUR RÉCUPÉRER LA LISTE DES TECHNOLOGIES
   componentDidMount() {
     axios
       .get("http://localhost:7000/api/technologies")
@@ -41,7 +42,7 @@ class FormApplications extends Component {
     }
   };
 
-  //FONCTION POUR UPDATE LE STATE DU LOGO AVEC UN FICHIER IMAGE CHOISI DU LOCAL:
+  //FONCTION POUR HANDLE LE STATE DU LOGO AVEC UN FICHIER IMAGE CHOISI DU LOCAL:
   handleLogoUpload = (event) =>{
       console.log(event.target.files[0]);
       this.setState({

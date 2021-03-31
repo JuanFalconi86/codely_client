@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import {Link} from 'react-router-dom'
+import React, { Component } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { buildFormData } from "../../utile.js";
+import "../../styles/formApplications.css";
 
 class EditApplications extends Component {
   state = {
     appName: "",
-    appLogo:
-      "https://res.cloudinary.com/djogypr9r/image/upload/v1616695400/app-default_s975ja.jpg",
+    appLogo: "",
     appDescription: "",
     technology: [], //une array vide, qui ensuite va contenir la liste des technologies
     technologySelected: [],
@@ -21,23 +22,25 @@ class EditApplications extends Component {
       .get(`http://localhost:7000/api/applications/${id}`)
       .then((response) => {
         const data = response.data;
-
         this.setState({
           appName: data.appName,
           appLogo: data.appLogo,
           appDescription: data.appDescription,
           technology: data.technology,
+          technologySelected: data.technologySelected,
           appCategory: data.appCategory,
         });
+        console.log(data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error, "NOSE BLEEEEED");
       });
   }
 
   //   handleChange = (event) => {
   //     this.setState({ [event.target.name]: event.target.value });
   //   };
+  //FONCTION POUR HANDLE CHANGE LES INPUTS DU FORMULAIRE
   handleChange = (event) => {
     if (event.target.name === "technology") {
       let value = Array.from(
@@ -51,6 +54,16 @@ class EditApplications extends Component {
     }
   };
 
+  //FONCTION POUR UPDATE LE STATE DU LOGO AVEC UN FICHIER IMAGE CHOISI DU LOCAL:
+  handleLogoUpload = (event) => {
+    console.log(event.target.files[0]);
+    this.setState({
+      appLogo: event.target.files[0],
+    });
+  };
+
+
+  // FONCTION POUR SUBMIT LE FORMULAIRE AVEC LES UPDATES
   editSubmit = (event) => {
     event.preventDefault();
     const id = this.props.match.params.id;
@@ -72,12 +85,12 @@ class EditApplications extends Component {
 
   render() {
     return (
-      <div>
+      <div className="app-form-container">
         <header>
           <h1>Edit this Application</h1> <br />
         </header>
 
-        <form onSubmit={this.editSubmit}>
+        <form onSubmit={this.editSubmit} className="app-form">
           <label htmlFor="appName"> Name</label> <br />
           <input
             id="appName"
@@ -111,8 +124,8 @@ class EditApplications extends Component {
             name="technology"
             id="technology"
             onChange={this.handleChange}
-            value={this.state.technologySelected}
-            multiple="true"
+            // value={this.state.technologySelected}
+            multiple={true}
           >
             {this.state.technology.map((oneTechnology) => {
               return (
@@ -128,8 +141,8 @@ class EditApplications extends Component {
           <select
             name="appCategory"
             id="appCategory"
-            onChange={this.handleChange}
-            value={this.state.appCategory}
+            onChange={this.handleLogoUpload}
+            // value={this.state.appCategory}
             single="true"
           >
             <option value="Books"> Books</option>
@@ -165,4 +178,4 @@ class EditApplications extends Component {
   }
 }
 
-export default EditApplications
+export default EditApplications;
