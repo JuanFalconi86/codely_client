@@ -12,8 +12,33 @@ export class Main extends Component {
     searchValue: "",
     application: null,
     _id: "",
+    ids:"",
+    arrayId:[]
   };
 
+
+// onGreet() {
+//   alert("hello");
+// }
+
+fetchData = (data) => {
+ console.log("Carbo", data)
+console.log("ARRAYID",this.state)
+
+this.setState({arrayId: [data, ...this.state.arrayId]})
+
+}
+
+addId = (HandleSelectTechnology) => {
+console.log(HandleSelectTechnology)
+
+// this.setState({ ids: [HandleSelectTechnology, ...this.state.ids] });
+  // const idArray=[];
+  //   idArray.push(e)
+  //   console.log(idArray)
+  }
+
+  
   // handleSearch = (event) => {
   //      this.setState({ searchValue: event.target.value });
   //    };
@@ -63,6 +88,8 @@ export class Main extends Component {
   render() {
     console.log("Show me the props", this.props);
     console.log("this state app", this.state.application);
+
+    console.log("ARRAYID", this.state.arrayId)
     return (
       <div
         style={{
@@ -74,7 +101,7 @@ export class Main extends Component {
         <div style={{ borderBottom: "1px solid #C4C4C4", padding: "12px" }}>
           <p>Select a Technology</p>
 
-          <Technologies />
+          <Technologies fetch={this.fetchData} greet={this.onGreet} />
         </div>
         <div style={{ display: "flex" }}>
           <div style={{ borderRight: "1px solid #C4C4C4" }}>

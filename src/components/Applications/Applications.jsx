@@ -12,7 +12,8 @@ class Applications extends React.Component {
   state = {
     applications: [],
     searchValue: '',
-    company: null
+    company: null, 
+
     
    
   };
@@ -39,18 +40,23 @@ class Applications extends React.Component {
 
   }
 
-
   render() {
 
     return (
       <div style={{paddingTop:"12px"}}>
 
-      
         <Search
           handleSearch={this.handleSearch}
           searchValue={this.state.searchValue}
         />
+
+
+
         {this.state.applications
+              // .filter((application)=>
+              // application.technology
+              // .includes(this.props.arrayId)
+              // )
               .filter((application) =>
                  application.appName
                    .toLowerCase()
