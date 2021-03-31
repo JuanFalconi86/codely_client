@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import NavMain from "./components/NavMain";
 import Home from "./pages/Home";
@@ -12,10 +12,13 @@ import Profile from "./pages/Profile";
 import Main from "./pages/Main";
 import FormApplications from "./components/Forms/FormApplications";
 import EditApplications from "./components/Forms/EditApplications";
-import OneCompany from './components/Companies/OneCompany.jsx'
+import OneCompany from './components/Companies/OneCompany.jsx';
 
 function App() {
+  const isAuth = useState(false);
+
   return (
+
     <div className="App">
       <NavMain />
       <Switch>
@@ -24,7 +27,7 @@ function App() {
         <Route exact path="/signup" component={Signup} />
         {/* <Route exact path="/applications/:id" component={ApplicationDetails} />  */}
         {/* <Route exact path="/main" component={Main} /> */}
-        <Route exact path="/application/create" component={FormApplications} />
+        <ProtectedRoute exact path="/application/create" component={FormApplications} isAuth={isAuth}/>
         <Route
           exact
           path="/application/edit/:id"

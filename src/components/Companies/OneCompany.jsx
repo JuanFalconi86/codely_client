@@ -46,6 +46,13 @@ class OneCompany extends Component {
                 <p>{this.state.company.lastName}</p>
                 <p>{this.state.company.email}</p>
                 <p><img src={this.state.company.companyLogoUrl}/></p>
+                <p>{this.state.company.apps.map((e) => {
+                    return (
+                        e.appName
+                    
+                        
+                    )
+                })}</p>
                 {/* {this.state.company.map((companyDetail) => (
                     <div key={companyDetail._id}>
                         <p>Company Name: {companyDetail.companyName}</p>
