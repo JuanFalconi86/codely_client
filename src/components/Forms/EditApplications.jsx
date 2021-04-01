@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "../../styles/formApplications.css";
+import { Link } from "react-router-dom";
 import { buildFormData } from "../../utile.js";
+import "../../styles/formApplications.css";
 class EditApplications extends Component {
   state = {
     appName: "",
@@ -12,51 +13,49 @@ class EditApplications extends Component {
     appCategory: "Books",
   };
   componentDidMount() {
-const getAppId =() => {
-    console.log(this.props);
-    const id = this.props.match.params.id;
-    return axios
-      .get(`http://localhost:7000/api/applications/${id}`)
-}
-const getTechnologies = () => {
-    return axios
-      .get("http://localhost:7000/api/technologies")
-}
-Promise.all([getAppId(), getTechnologies()])
-.then((response) =>{
-    const data = response.data;
-    // console.log(response)
-    console.log( "THIS IS RESPONSE", response)
-    this.setState({
-      appName: response[0].data.appName,
-      appLogo: response[0].data.appLogo,
-      appDescription: response[0].data.appDescription,
-      technologyList: response[1].data,
-      technologySelected: response[1].data.technologySelected,
-      appCategory: response[0].data.appCategory,
+    const getAppId = () => {
+      console.log(this.props);
+      const id = this.props.match.params.id;
+      return axios.get(`http://localhost:7000/api/applications/${id}`);
+    };
+    const getTechnologies = () => {
+      return axios.get("http://localhost:7000/api/technologies");
+    };
+    Promise.all([getAppId(), getTechnologies()]).then((response) => {
+      const data = response.data;
+      // console.log(response)
+      console.log("THIS IS RESPONSE", response);
+      this.setState({
+        appName: response[0].data.appName,
+        appLogo: response[0].data.appLogo,
+        appDescription: response[0].data.appDescription,
+        technologyList: response[1].data,
+        technologySelected: response[1].data.technologySelected,
+        appCategory: response[0].data.appCategory,
+      });
+      console.log({ technology: response[1].data.technologySelected });
     });
-    console.log({ technology: response[1].data.technologySelected });
-})}
-//     console.log(this.props);
-//     const id = this.props.match.params.id;
-//     axios
-//       .get(`http://localhost:7000/api/applications/${id}`)
-//       .then((response) => {
-//         const data = response.data;
-//         this.setState({
-//           appName: data.appName,
-//           appLogo: data.appLogo,
-//           appDescription: data.appDescription,
-//           technology: data.technology,
-//           technologySelected: data.technologySelected,
-//           appCategory: data.appCategory,
-//         });
-//         console.log(data);
-//       })
-//       .catch((error) => {
-//         console.log(error, "NOSE BLEEEEED");
-//       });
-//   }
+  }
+  //     console.log(this.props);
+  //     const id = this.props.match.params.id;
+  //     axios
+  //       .get(`http://localhost:7000/api/applications/${id}`)
+  //       .then((response) => {
+  //         const data = response.data;
+  //         this.setState({
+  //           appName: data.appName,
+  //           appLogo: data.appLogo,
+  //           appDescription: data.appDescription,
+  //           technology: data.technology,
+  //           technologySelected: data.technologySelected,
+  //           appCategory: data.appCategory,
+  //         });
+  //         console.log(data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error, "NOSE BLEEEEED");
+  //       });
+  //   }
   //FONCTION POUR HANDLE CHANGE LES INPUTS DU FORMULAIRE
   handleChange = (event) => {
     if (event.target.name === "technology") {
@@ -90,17 +89,17 @@ Promise.all([getAppId(), getTechnologies()])
       technology: this.state.technologySelected,
       appCategory: this.state.appCategory,
     });
-    console.log("BEFORE THE AXIOS", this.state)
+    console.log("BEFORE THE AXIOS", this.state);
     axios
-      .patch(`http://localhost:7000/api/applications/${id}`,formData)
-    //     appName: this.state.appName,
-    //     appLogo: this.state.appLogo,
-    //     appDescription: this.state.appDescription,
-    //     technology: this.state.technologySelected,
-    //     appCategory: this.state.appCategory,
-    //   })
+      .patch(`http://localhost:7000/api/applications/${id}`, formData)
+      //     appName: this.state.appName,
+      //     appLogo: this.state.appLogo,
+      //     appDescription: this.state.appDescription,
+      //     technology: this.state.technologySelected,
+      //     appCategory: this.state.appCategory,
+      //   })
       .then((response) => {
-          console.log("AFTER THE AXIOS PATCH", this.state);
+        console.log("AFTER THE AXIOS PATCH", this.state);
         this.props.history.push("/main");
       })
       .catch((error) => {

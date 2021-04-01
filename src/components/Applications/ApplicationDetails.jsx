@@ -29,22 +29,22 @@ class ApplicationDetails extends React.Component {
   
     }
 
-    // handleDelete = (id) => {
-    //   axios
-    //     .delete(`http://localhost:7000/api/applications/${id}`, {
-    //       withCredentials: true
-    //     })
-    //     .then((response) => {
-    //      console.log('response :>> ', response);
-    //      console.log('Deleted');
-    //       this.setState({application: [...this.state.application.filter(application => application._id !== id)]});
-    //       this.props.history.push("/");
+    handleDelete = (id) => {
+      axios
+        .delete(`http://localhost:7000/api/applications/${id}`, {
+          withCredentials: true
+        })
+        .then((response) => {
+         console.log('response :>> ', response);
+         console.log('Deleted');
+          // this.setState({application: [...this.state.application.filter(application => application._id !== id)]});
+          this.props.history.push("/");
           
-    //     })
-    //     .catch((error) => {
-    //       console.log(error)
-    //     })
-    // }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
 
     componentDidUpdate(prevProps) {
 
@@ -98,7 +98,7 @@ class ApplicationDetails extends React.Component {
                 <img
                   style={{ height: "112px", width: "112px", borderRadius: "5px" }}
                   src={this.state.application.appLogo}
-                  alt=""
+                  alt="applogo"
                 />
               </div>
               <div style={{paddingLeft:"12px"}}>
