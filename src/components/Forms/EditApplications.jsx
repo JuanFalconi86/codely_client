@@ -1,71 +1,61 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { buildFormData } from "../../utile.js";
 import "../../styles/formApplications.css";
-
 class EditApplications extends Component {
   state = {
     appName: "",
     appLogo: "",
     appDescription: "",
-    technology: [], //une array vide, qui ensuite va contenir la liste des technologies
+    technologyList: [], //une array vide, qui ensuite va contenir la liste des technologies
     technologySelected: [],
     appCategory: "Books",
   };
-
   componentDidMount() {
-
-const getAppId =() => {
-    console.log(this.props);
-    const id = this.props.match.params.id;
-    return axios
-      .get(`http://localhost:7000/api/applications/${id}`)
-      
-}
-
-const getTechnologies = () => {
-    return axios
-      .get("http://localhost:7000/api/technologies")
-      
-}
-
-Promise.all([getAppId(), getTechnologies()])
-.then((response) =>{
-    const data = response.data;
-    // console.log(response)
-    console.log( response)
-    this.setState({
-      appName: response[0].data.appName,
-      appLogo: response[0].data.appLogo,
-      appDescription: response[0].data.appDescription,
-      technology: response[1].data,
-      technologySelected: response[1].data.technologySelected,
-      appCategory: response[0].data.appCategory,
+    const getAppId = () => {
+      console.log(this.props);
+      const id = this.props.match.params.id;
+      return axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/applications/${id}`);
+    };
+    const getTechnologies = () => {
+      return axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/technologies`);
+    };
+    Promise.all([getAppId(), getTechnologies()]).then((response) => {
+      const data = response.data;
+      // console.log(response)
+      console.log("THIS IS RESPONSE", response);
+      this.setState({
+        appName: response[0].data.appName,
+        appLogo: response[0].data.appLogo,
+        appDescription: response[0].data.appDescription,
+        technologyList: response[1].data,
+        technologySelected: response[1].data.technologySelected,
+        appCategory: response[0].data.appCategory,
+      });
+      console.log({ technology: response[1].data.technologySelected });
     });
-    console.log({ technology: response[1].data.technologySelected });
-})}
-//     console.log(this.props);
-//     const id = this.props.match.params.id;
-
-//     axios
-//       .get(`http://localhost:7000/api/applications/${id}`)
-//       .then((response) => {
-//         const data = response.data;
-//         this.setState({
-//           appName: data.appName,
-//           appLogo: data.appLogo,
-//           appDescription: data.appDescription,
-//           technology: data.technology,
-//           technologySelected: data.technologySelected,
-//           appCategory: data.appCategory,
-//         });
-//         console.log(data);
-//       })
-//       .catch((error) => {
-//         console.log(error, "NOSE BLEEEEED");
-//       });
-//   }
-
-  
+  }
+  //     console.log(this.props);
+  //     const id = this.props.match.params.id;
+  //     axios
+  //       .get(`http://localhost:7000/api/applications/${id}`)
+  //       .then((response) => {
+  //         const data = response.data;
+  //         this.setState({
+  //           appName: data.appName,
+  //           appLogo: data.appLogo,
+  //           appDescription: data.appDescription,
+  //           technology: data.technology,
+  //           technologySelected: data.technologySelected,
+  //           appCategory: data.appCategory,
+  //         });
+  //         console.log(data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error, "NOSE BLEEEEED");
+  //       });
+  //   }
   //FONCTION POUR HANDLE CHANGE LES INPUTS DU FORMULAIRE
   handleChange = (event) => {
     if (event.target.name === "technology") {
@@ -79,7 +69,6 @@ Promise.all([getAppId(), getTechnologies()])
       this.setState({ [event.target.name]: event.target.value });
     }
   };
-
   //FONCTION POUR UPDATE LE STATE DU LOGO AVEC UN FICHIER IMAGE CHOISI DU LOCAL:
   handleLogoUpload = (event) => {
     // console.log(event.target.files[0]);
@@ -88,39 +77,41 @@ Promise.all([getAppId(), getTechnologies()])
       appLogo: event.target.files[0],
     });
   };
-
-
   // FONCTION POUR SUBMIT LE FORMULAIRE AVEC LES UPDATES
   editSubmit = (event) => {
     event.preventDefault();
     const id = this.props.match.params.id;
     const formData = new FormData();
-    buildFormData(formData, this.state);
-    console.log("BEFORE THE AXIOS", this.state)
+    buildFormData(formData, {
+      appName: this.state.appName,
+      appLogo: this.state.appLogo,
+      appDescription: this.state.appDescription,
+      technology: this.state.technologySelected,
+      appCategory: this.state.appCategory,
+    });
+    console.log("BEFORE THE AXIOS", this.state);
     axios
-      .patch(`http://localhost:7000/api/applications/${id}`,formData)
-    //     appName: this.state.appName,
-    //     appLogo: this.state.appLogo,
-    //     appDescription: this.state.appDescription,
-    //     technology: this.state.technologySelected,
-    //     appCategory: this.state.appCategory,
-    //   })
+      .patch(`${process.env.REACT_APP_BACKEND_URL}/api/applications/${id}`, formData)
+      //     appName: this.state.appName,
+      //     appLogo: this.state.appLogo,
+      //     appDescription: this.state.appDescription,
+      //     technology: this.state.technologySelected,
+      //     appCategory: this.state.appCategory,
+      //   })
       .then((response) => {
-          console.log("AFTER THE AXIOS PATCH", this.state);
+        console.log("AFTER THE AXIOS PATCH", this.state);
         this.props.history.push("/main");
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
   render() {
     return (
       <div className="app-form-container">
         <header>
           <h1>Edit this Application</h1> <br />
         </header>
-
         <form onSubmit={this.editSubmit} className="app-form">
           <label htmlFor="appName"> Name</label> <br />
           <input
@@ -158,7 +149,7 @@ Promise.all([getAppId(), getTechnologies()])
             value={this.state.technologySelected}
             multiple={true}
           >
-            {this.state.technology.map((oneTechnology) => {
+            {this.state.technologyList.map((oneTechnology) => {
               return (
                 <option value={oneTechnology._id} key={oneTechnology._id}>
                   {oneTechnology.name}
@@ -208,5 +199,4 @@ Promise.all([getAppId(), getTechnologies()])
     );
   }
 }
-
 export default EditApplications;

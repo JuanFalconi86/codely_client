@@ -4,7 +4,7 @@ import NavMain from "./components/NavMain";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-
+import ApplicationDetails from "./components/Applications/ApplicationDetails"
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Main from "./pages/Main";
@@ -21,6 +21,9 @@ function App() {
       <NavMain />
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/main" component={Main} />
+        <Route exact path="/applications/:id"
+              component={ApplicationDetails}/>
         <Route exact path="/signin" component={Signin} />
         <Route exact path="/signup" component={Signup} />
         {/* <Route exact path="/applications/:id" component={ApplicationDetails} />  */}
@@ -32,8 +35,8 @@ function App() {
           component={EditApplications}
         />
         <Route exact path="/company/:id" component={OneCompany}/>
-        <Main />
-
+        {/* <Main />  */}
+        
         <ProtectedRoute exact path="/profile" component={Profile} />
       </Switch>
     </div>
