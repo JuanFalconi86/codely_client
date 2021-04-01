@@ -29,22 +29,22 @@ class ApplicationDetails extends React.Component {
   
     }
 
-    handleDelete = (id) => {
-      axios
-        .delete(`http://localhost:7000/api/applications/${id}`, {
-          withCredentials: true
-        })
-        .then((response) => {
-         console.log('response :>> ', response);
-         console.log('Deleted');
-          this.setState({application: [...this.state.application.filter(application => application._id !== id)]});
-          this.props.history.push("/");
+    // handleDelete = (id) => {
+    //   axios
+    //     .delete(`http://localhost:7000/api/applications/${id}`, {
+    //       withCredentials: true
+    //     })
+    //     .then((response) => {
+    //      console.log('response :>> ', response);
+    //      console.log('Deleted');
+    //       this.setState({application: [...this.state.application.filter(application => application._id !== id)]});
+    //       this.props.history.push("/");
           
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
+    //     })
+    //     .catch((error) => {
+    //       console.log(error)
+    //     })
+    // }
 
     componentDidUpdate(prevProps) {
 
@@ -77,10 +77,9 @@ class ApplicationDetails extends React.Component {
 
     }
 
-
-    
   
     render() {
+      console.log("APPLI", this.state.application)
       console.log("this state is", this.state)
       if (this.state.application === null) {
     return <div>Select an application</div>;
@@ -112,7 +111,6 @@ class ApplicationDetails extends React.Component {
             <div>
               <br/>
               <h3 style={{fontSize:"1em"}}>Technologies used to develop {this.state.application.appName}:</h3>
-              <button style={{fontSize:"1em"}} onClick={() => this.handleDelete(this.state.application._id)}>Delete This App</button>
               <br/>
               <div style={{display:"flex", flexWrap:"wrap"}}>
         {this.state.application.technology.map((technology) => (
@@ -122,6 +120,8 @@ class ApplicationDetails extends React.Component {
           </div>
         ))}
       </div>
+      <br/>
+      <button style={{fontSize:"1em"}} onClick={() => this.handleDelete(this.state.application._id)}>Delete This App</button>
             </div>
           </div>
       );
