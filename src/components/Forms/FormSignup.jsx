@@ -3,6 +3,8 @@ import { withRouter, Redirect } from "react-router-dom";
 import { withUser } from "../Auth/withUser";
 import apiHandler from "../../api/apiHandler";
 
+import './../../styles/signup.css'
+
 class FormSignup extends Component {
   state = {
     companyName: "",
@@ -43,8 +45,15 @@ class FormSignup extends Component {
     }
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="firstName">First Name</label>
+      <div className="signup-wrapper">
+      <div className="form-wrapper-signup">
+      <header className="title-signup">
+          <h1>Welcome</h1> <br />
+        </header>
+      <form onSubmit={this.handleSubmit} className="form">
+        <div className="credentials-signup">
+          <div className="input-box-signup">
+        <label htmlFor="firstName">Name</label>
         <input
           onChange={this.handleChange}
           value={this.state.firstName}
@@ -52,6 +61,8 @@ class FormSignup extends Component {
           id="firstName"
           name="firstName"
         />
+        </div>
+        <div className="input-box-signup">
         <label htmlFor="lastName">Last Name</label>
         <input
           onChange={this.handleChange}
@@ -60,6 +71,8 @@ class FormSignup extends Component {
           id="lastName"
           name="lastName"
         />
+        </div>
+        <div className="input-box-signup">
         <label htmlFor="email">Email</label>
         <input
           onChange={this.handleChange}
@@ -68,6 +81,8 @@ class FormSignup extends Component {
           id="email"
           name="email"
         />
+        </div>
+        <div className="input-box-signup">
         <label htmlFor="password">Password</label>
         <input
           onChange={this.handleChange}
@@ -76,6 +91,8 @@ class FormSignup extends Component {
           id="password"
           name="password"
         />
+        </div>
+        <div className="input-box-signup">
         <label htmlFor="companyName">Company Name</label>
         <input
           onChange={this.handleChange}
@@ -84,6 +101,8 @@ class FormSignup extends Component {
           id="companyName"
           name="companyName"
         />
+        </div>
+        <div className="input-box-signup">
         <label htmlFor="companyIndustry">Company Industry</label>
         <input
           onChange={this.handleChange}
@@ -92,6 +111,8 @@ class FormSignup extends Component {
           id="companyIndustry"
           name="companyIndustry"
         />
+        </div>
+        <div className="input-box-signup">
         <label htmlFor="representativePhotoUrl">Photo of representative</label>
         <input
           onChange={this.handleChange}
@@ -100,6 +121,8 @@ class FormSignup extends Component {
           id="representativePhotoUrl"
           name="representativePhotoUrl"
         />
+        </div>
+        <div className="input-box-signup">
         <label htmlFor="representativePosition">Representative Position</label>
         <input
           onChange={this.handleChange}
@@ -108,6 +131,8 @@ class FormSignup extends Component {
           id="representativePosition"
           name="representativePosition"
         />
+        </div>
+        <div className="input-box-signup">
         <label htmlFor="companyLogo">Company Logo</label>
         <input
           onChange={this.handleChange}
@@ -116,8 +141,14 @@ class FormSignup extends Component {
           id="companyLogoUrl"
           name="companyLogoUrl"
         />
+        </div>
+        </div>
+        <div className="createAccount">
         <button>Submit</button>
+        </div>
       </form>
+      </div>
+      </div>
     );
   }
 }

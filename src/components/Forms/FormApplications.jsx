@@ -93,12 +93,15 @@ class FormApplications extends Component {
   render() {
     console.log(this.state.technologySelected, "THIS IS TECHNOLOGY SELECTED");
     return (
-      <div className="app-form-container">
-        <header>
+      <div className="wrapper">
+      <div className="form-wrapper">
+        <header className="title">
           <h1>Create new Application</h1> <br />
         </header>
-
-        <form onSubmit={this.formSubmit} className="app-form">
+      
+        <form onSubmit={this.formSubmit} className="form">
+          <div className="credentials">
+          <div className="input-box">
           <label htmlFor="appName"> Name (required) </label> <br />
           <input
             id="appName"
@@ -107,7 +110,9 @@ class FormApplications extends Component {
             onChange={this.handleChange}
             value={this.state.appName}
           />
+          </div>
           <br />
+          <div className="input-box">
           <label htmlFor="appLogo"> Logo (required)</label> <br />
           <input
             id="appLogo"
@@ -116,7 +121,9 @@ class FormApplications extends Component {
             onChange={this.handleLogoUpload}
             // value={this.state.appLogo}
           />
+          </div>
           <br />
+          <div className="input-box">
           <label htmlFor="appDescription">Description (required)</label> <br />
           <input
             id="appDescription"
@@ -125,10 +132,15 @@ class FormApplications extends Component {
             onChange={this.handleChange}
             value={this.state.appDescription}
           />
+          </div>
+          </div>
           <br />
+          <div className="selection">
+          <div>
           <label htmlFor="technology">Technology (required)</label> <br />
           {/* <select name="technology" id="technology" onChange={this.handleChange} value={this.state.technology} multiple> */}
-          <select
+          <select 
+          className="selector"
             name="technology"
             id="technology"
             onChange={this.handleChange}
@@ -145,10 +157,15 @@ class FormApplications extends Component {
               );
             })}
           </select>
-          ;
+          </div>
+         
+          
           <br />
+          
+          <div>
           <label htmlFor="appCategory">App Category (required)</label> <br />
           <select
+          className="selector"
             name="appCategory"
             id="appCategory"
             onChange={this.handleChange}
@@ -177,12 +194,19 @@ class FormApplications extends Component {
             <option value="Kids">Kids</option>
             <option value="Utilities">Utilities</option>
           </select>
+          </div>
+          </div>
+          
           <br />
           {/* <label htmlFor="appCategory">App Category</label> <br/>
           <input type="text" name="appCategory" onChange={this.handleChange} value={this.state.appCategory}/> <br/> */}
           <br />
+          <div className="createAccount">
           <button>Create new App</button>
+          </div>
+          
         </form>
+      </div>
       </div>
     );
   }

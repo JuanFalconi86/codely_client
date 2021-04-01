@@ -3,12 +3,11 @@ import axios from "axios";
 
 class Technologies extends React.Component {
   state = {
-    technologies: [], 
+    selectedTechnos:[],
+    technologies: [],
     isClicked: false,
-    technologyId:""
-    
+    technologyId: "",
   };
-
 
   componentDidMount() {
     axios
@@ -22,25 +21,45 @@ class Technologies extends React.Component {
       });
   }
 
+  addTechno = (id) => 
+    this.state.selectedTechnos.includes(id)
+      ? this.state.selectedTechnos.filter((tech) => tech !== id)
+      : [ ...this.state.selectedTechnos, id]
+  
 
- HandleSelectTechnology = (e, id) => {
-    let technologyId;
-    this.setState({ isClicked: !this.state.isClicked })
-    if (this.state.isClicked) {
-      technologyId = ""
-    } else {technologyId = id}
+  HandleSelectTechnology = (id) => {
+    const technos = this.addTechno(id)
+    this.setState({selectedTechnos: technos})
     // console.log(technologyId)
-    return technologyId
-  }
-
+    this.props.fetch(technos);
+  };
 
   render() {
+
     return (
-      <div style={{display:"flex", flexWrap:"wrap"}}>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
         {this.state.technologies.map((technology) => (
-          <button key={technology._id} onClick={(e) => this.props.fetch( technology._id, e)} style={{width:"60px", display:"flex", flexDirection:"column", alignItems:"center", margin:"2px 4px"}}>
-            <img style={{height:"40px", width:"40px"}} src={technology.logo} alt="" />
-            <p style={{fontSize:"0.7em"}}>{technology.name}</p>
+          <button
+            key={technology._id}
+            onClick={() => this.HandleSelectTechnology(technology._id)}
+            style={{
+              width: "60px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              margin: "2px 4px",
+              backgroundColor: "white",
+              border: this.state.selectedTechnos.includes(technology._id) ? "2px solid green" : "1px solid #C4C4C4", 
+              outline: "none"
+              
+            }}
+          >
+            <img
+              style={{ height: "40px", width: "40px" }}
+              src={technology.logo}
+              alt=""
+            />
+            <p style={{ fontSize: "0.7em" }}>{technology.name}</p>
           </button>
         ))}
         {/* <button onClick={this.props.greet}>Greet</button>
@@ -52,7 +71,9 @@ class Technologies extends React.Component {
 
 export default Technologies;
 
-{/* <button key={technology._id} onClick={(e,  HandleSelectTechnology) => this.props.fetch( (id) => HandleSelectTechnology(technology._id), e)} style={{width:"60px", display:"flex", flexDirection:"column", alignItems:"center", margin:"2px 4px"}}>
+{
+  /* <button key={technology._id} onClick={(e,  HandleSelectTechnology) => this.props.fetch( (id) => HandleSelectTechnology(technology._id), e)} style={{width:"60px", display:"flex", flexDirection:"column", alignItems:"center", margin:"2px 4px"}}>
 <img style={{height:"40px", width:"40px"}} src={technology.logo} alt="" />
 <p style={{fontSize:"0.7em"}}>{technology.name}</p>
-</button> */}
+</button> */
+}

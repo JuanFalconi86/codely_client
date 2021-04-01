@@ -60,7 +60,4 @@ img:not([alt]) {
 		scroll-behavior: auto !important;
 	}
 }
-.logo {
-	width: 100px;
-	height: auto;
-}
+

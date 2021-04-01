@@ -13,9 +13,11 @@ class OneCompany extends Component {
         console.log("whaaaaaaaaaaaaaat")
         console.log("IIIIIIIIIIII hate my life")
         console.log("Im the id:", id);
-        
+      
         axios
+       
             .get(`http://localhost:7000/api/company-profile/${id}`)
+
             .then((response) => {
                 console.log("Response Data", response);
                 this.setState({company: response.data})
@@ -27,6 +29,8 @@ class OneCompany extends Component {
 
         
     }
+
+    
 
 
 
@@ -41,11 +45,11 @@ class OneCompany extends Component {
                 <h1>I'm here</h1>
                 <p>{this.state.company.companyName}</p>
                 <p>{this.state.company.companyIndustry}</p>
-                <p><img src={this.state.company.representativePhotoUrl}/></p>
+                <p><img src={this.state.company.representativePhotoUrl} alt="company"/></p>
                 <p>{this.state.company.firstName}</p>
                 <p>{this.state.company.lastName}</p>
                 <p>{this.state.company.email}</p>
-                <p><img src={this.state.company.companyLogoUrl}/></p>
+                <p><img src={this.state.company.companyLogoUrl} alt="logo"/></p>
                 <p>{this.state.company.apps.map((e) => {
                     return (
                         e.appName
