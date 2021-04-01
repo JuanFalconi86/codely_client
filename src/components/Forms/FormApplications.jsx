@@ -1,25 +1,25 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import '../../styles/formApplications.css'
-import {buildFormData} from "../../utile.js"
+import "../../styles/formApplications.css";
+import { buildFormData } from "../../utile.js";
 
 class FormApplications extends Component {
   state = {
     appName: "",
     appLogo: "",
     appDescription: "",
-    technology: [], //une array vide, qui ensuite va contenir la liste des technologies
+    technologyList: [], //une array vide, qui ensuite va contenir la liste des technologies
     technologySelected: [],
     appCategory: "Books",
   };
 
-    // ICI, JE FAIS UN CALL AXIOS POUR RÉCUPÉRER LA LISTE DES TECHNOLOGIES
+  // ICI, JE FAIS UN CALL AXIOS POUR RÉCUPÉRER LA LISTE DES TECHNOLOGIES
   componentDidMount() {
     axios
       .get("http://localhost:7000/api/technologies")
       .then((response) => {
-        this.setState({ technology: response.data });
+        this.setState({ technologyList: response.data });
         console.log(response.data);
       })
       .catch((error) => {
@@ -27,28 +27,27 @@ class FormApplications extends Component {
       });
   }
 
-
   // FONCTION POUR HANDLE CHANGE LES INPUTS DU FORMULAIRE
   handleChange = (event) => {
     if (event.target.name === "technology") {
-       let value = Array.from(
-         event.target.selectedOptions,
-         (option) => option.value
-       );
-       this.setState({ technologySelected: value }); 
-      console.log(event.target)
+      let value = Array.from(
+        event.target.selectedOptions,
+        (option) => option.value
+      );
+      this.setState({ technologySelected: value });
+      console.log(event.target);
     } else {
       this.setState({ [event.target.name]: event.target.value });
     }
   };
 
   //FONCTION POUR HANDLE LE STATE DU LOGO AVEC UN FICHIER IMAGE CHOISI DU LOCAL:
-  handleLogoUpload = (event) =>{
-      console.log(event.target.files[0]);
-      this.setState({
-          appLogo: event.target.files[0]
-      })
-  }
+  handleLogoUpload = (event) => {
+    console.log(event.target.files[0]);
+    this.setState({
+      appLogo: event.target.files[0],
+    });
+  };
 
   // FONCTION POUR SUBMIT LE FORMULAIRE
   formSubmit = (event) => {
@@ -62,10 +61,16 @@ class FormApplications extends Component {
     // formData.append("technology", this.state.technologySelected);
     // formData.append("appCategory", this.state.appCategory);
     // console.log(formData);
-
+    console.log("THIS IS CONSOLE LOG THIS.STATE", this.state);
     // MAIS DANS CE CAS, COMME J'AI UNE ARRAY DE TECHNOLOGIES, JE DOIS UTILISER CETTE FONCTION BUILD FORM DATA, QUI ELLE MEME EST IMPORTEE DE MON FICHIER UTILE
-    buildFormData(formData, this.state)
-
+    buildFormData(formData, {
+      appName: this.state.appName,
+      appLogo: this.state.appLogo,
+      appDescription: this.state.appDescription,
+      technology: this.state.technologySelected,
+      appCategory: this.state.appCategory,
+    });  // on définit les keys qu'on va envoyer lors du submit: pourquoi on fait ça ? parce que technology ==> on envoi la LISTE des technologies
+    
     axios
       .post("http://localhost:7000/api/application/create", formData)
       .then((response) => {
@@ -73,13 +78,12 @@ class FormApplications extends Component {
           appName: "",
           appLogo: "",
           appDescription: "",
-          technology: [],
+          technologyList: [],
           technologySelected: [],
           appCategory: "Books",
         });
         this.props.history.push("/main");
         console.log("NEW APPLICATION CREATED");
-        console.log(formData)
       })
       .catch((error) => {
         console.log(error, "ERROR, NOSE BLEED");
@@ -87,6 +91,7 @@ class FormApplications extends Component {
   };
 
   render() {
+    console.log(this.state.technologySelected, "THIS IS TECHNOLOGY SELECTED");
     return (
       <div className="app-form-container">
         <header>
@@ -119,7 +124,6 @@ class FormApplications extends Component {
             name="appDescription"
             onChange={this.handleChange}
             value={this.state.appDescription}
-    
           />
           <br />
           <label htmlFor="technology">Technology (required)</label> <br />
@@ -133,7 +137,7 @@ class FormApplications extends Component {
           >
             {/* <option value="Javascript">Javascript</option>
               <option value="MongoDB">MongoDB</option> */}
-            {this.state.technology.map((oneTechnology) => {
+            {this.state.technologyList.map((oneTechnology) => {
               return (
                 <option value={oneTechnology._id} key={oneTechnology._id}>
                   {oneTechnology.name}

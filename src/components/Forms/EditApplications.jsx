@@ -9,7 +9,7 @@ class EditApplications extends Component {
     appName: "",
     appLogo: "",
     appDescription: "",
-    technology: [], //une array vide, qui ensuite va contenir la liste des technologies
+    technologyList: [], //une array vide, qui ensuite va contenir la liste des technologies
     technologySelected: [],
     appCategory: "Books",
   };
@@ -34,12 +34,12 @@ Promise.all([getAppId(), getTechnologies()])
 .then((response) =>{
     const data = response.data;
     // console.log(response)
-    console.log( response)
+    console.log( "THIS IS RESPONSE", response)
     this.setState({
       appName: response[0].data.appName,
       appLogo: response[0].data.appLogo,
       appDescription: response[0].data.appDescription,
-      technology: response[1].data,
+      technologyList: response[1].data,
       technologySelected: response[1].data.technologySelected,
       appCategory: response[0].data.appCategory,
     });
@@ -97,7 +97,13 @@ Promise.all([getAppId(), getTechnologies()])
     event.preventDefault();
     const id = this.props.match.params.id;
     const formData = new FormData();
-    buildFormData(formData, this.state);
+    buildFormData(formData, {
+      appName: this.state.appName,
+      appLogo: this.state.appLogo,
+      appDescription: this.state.appDescription,
+      technology: this.state.technologySelected,
+      appCategory: this.state.appCategory,
+    });
     console.log("BEFORE THE AXIOS", this.state)
     axios
       .patch(`http://localhost:7000/api/applications/${id}`,formData)
@@ -160,7 +166,7 @@ Promise.all([getAppId(), getTechnologies()])
             value={this.state.technologySelected}
             multiple={true}
           >
-            {this.state.technology.map((oneTechnology) => {
+            {this.state.technologyList.map((oneTechnology) => {
               return (
                 <option value={oneTechnology._id} key={oneTechnology._id}>
                   {oneTechnology.name}
