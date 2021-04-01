@@ -61,7 +61,7 @@ class ApplicationDetails extends React.Component {
   
     render() {
       if (this.state.application === null) {
-    return <div>Loading the application details...</div>;
+    return <div>Select an application</div>;
        }
 
       return (

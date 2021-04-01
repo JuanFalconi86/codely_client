@@ -22,15 +22,25 @@ export class Main extends Component {
 // }
 
 fetchData = (data) => {
- console.log("Carbo", data)
-console.log("ARRAYID",this.state)
+//  console.log("Carbo", data)
+// console.log("ARRAYID",this.state)
 
-this.setState({arrayId: [data, ...this.state.arrayId]})
+this.setState({arrayId:data})
+
+// this.state.arrayId.forEach((element, index, object) => {
+//   if (data === element){
+//     this.setState({arrayId: [...this.state.arrayId.splice(this.state.arrayId.indexOf(element), 1)]}
+//     )
+//     console.log("index of removed element", this.state.arrayId.indexOf(element))
+//     }
+// });
+
+// this.setState({arrayId: [data]})
 
 }
 
 addId = (HandleSelectTechnology) => {
-console.log(HandleSelectTechnology)
+// console.log(HandleSelectTechnology)
 
 // this.setState({ ids: [HandleSelectTechnology, ...this.state.ids] });
   // const idArray=[];
@@ -99,7 +109,7 @@ console.log(HandleSelectTechnology)
         }}
       >
         <div style={{ borderBottom: "1px solid #C4C4C4", padding: "12px" }}>
-          <p>Select a Technology</p>
+          <p>Select Technologies:</p>
 
           <Technologies fetch={this.fetchData} greet={this.onGreet} />
         </div>
@@ -110,7 +120,7 @@ console.log(HandleSelectTechnology)
           searchValue={this.state.searchValue}
         /> */}
             {/* <Applications applications={this.state.applications}/> */}
-            <Applications />
+            <Applications  arrayIds={this.state.arrayId}/>
           </div>
           <div
             style={{
