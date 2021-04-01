@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Main from "../../pages/Main"
+import { Link } from "react-router-dom";
 
 class ApplicationDetails extends React.Component {
     state = {
@@ -128,6 +129,9 @@ class ApplicationDetails extends React.Component {
       </div>
       <br/>
       <button style={{fontSize:"1em"}} onClick={() => this.handleDelete(this.state.application._id)}>Delete This App</button>
+      <br/>
+      <br/>
+      <Link style={{border:"1px solid black", borderRadius:"5px", padding:"5px"}} to ={`/application/edit/${this.state.application._id}`}> Update {this.state.application.appName} App</Link>
             </div>
           </div>
           </div>
