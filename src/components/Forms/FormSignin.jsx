@@ -23,6 +23,7 @@ class FormSignin extends Component {
       .signin(this.state)
       .then((data) => {
         this.props.context.setUser(data);
+        console.log("current user =>" ,data)
       })
       .catch((error) => {
         console.log(error);

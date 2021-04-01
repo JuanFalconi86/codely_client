@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+
 import { Switch, Route } from "react-router-dom";
 import NavMain from "./components/NavMain";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-import Applications from "./components/Applications/Applications";
-import Technologies from "./components/Technologies/Technologies";
-import ApplicationDetails from "./components/Applications/ApplicationDetails";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Main from "./pages/Main";
@@ -15,7 +13,7 @@ import EditApplications from "./components/Forms/EditApplications";
 import OneCompany from './components/Companies/OneCompany.jsx';
 
 function App() {
-  const isAuth = useState(true);
+  
 
   return (
 
@@ -27,7 +25,7 @@ function App() {
         <Route exact path="/signup" component={Signup} />
         {/* <Route exact path="/applications/:id" component={ApplicationDetails} />  */}
         {/* <Route exact path="/main" component={Main} /> */}
-        <ProtectedRoute exact path="/application/create" component={FormApplications} isAuth={isAuth}/>
+        <Route exact path="/application/create" component={FormApplications}/>
         <Route
           exact
           path="/application/edit/:id"

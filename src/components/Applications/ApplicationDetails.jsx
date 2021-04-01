@@ -12,7 +12,9 @@ class ApplicationDetails extends React.Component {
       console.log("HERE IS THE ID", id)
 
       axios
-        .get(`http://localhost:7000/api/applications/${id}`)
+        .get(`http://localhost:7000/api/applications/${id}`, {
+          withCredentials: true
+        })
         .then((response) => {
           this.setState({ application: response.data });
           console.log("HERE IS THE RESPONSE", response)
@@ -25,6 +27,23 @@ class ApplicationDetails extends React.Component {
       // DEFINIR COMMENT DISPLAY COMPANIES AND NOT THE OBJECT ID
       // J'ai essayé de AppsModel.find().populate("proprietaryCompany") but it gives an error
   
+    }
+
+    handleDelete = (id) => {
+      axios
+        .delete(`http://localhost:7000/api/applications/${id}`, {
+          withCredentials: true
+        })
+        .then((response) => {
+         console.log('response :>> ', response);
+         console.log('Deleted');
+          this.setState({application: [...this.state.application.filter(application => application._id !== id)]});
+          this.props.history.push("/");
+          
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
 
     componentDidUpdate(prevProps) {
@@ -58,8 +77,11 @@ class ApplicationDetails extends React.Component {
 
     }
 
+
+    
   
     render() {
+      console.log("this state is", this.state)
       if (this.state.application === null) {
     return <div>Select an application</div>;
        }
@@ -90,6 +112,7 @@ class ApplicationDetails extends React.Component {
             <div>
               <br/>
               <h3 style={{fontSize:"1em"}}>Technologies used to develop {this.state.application.appName}:</h3>
+              <button style={{fontSize:"1em"}} onClick={() => this.handleDelete(this.state.application._id)}>Delete This App</button>
               <br/>
               <div style={{display:"flex", flexWrap:"wrap"}}>
         {this.state.application.technology.map((technology) => (

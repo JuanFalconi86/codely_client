@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
+
 import Applications from "../components/Applications/Applications";
 import Technologies from "../components/Technologies/Technologies";
 import ApplicationDetails from "../components/Applications/ApplicationDetails";
-import Search from "../components/Search";
+
 import { Route } from "react-router-dom";
 
 export class Main extends Component {

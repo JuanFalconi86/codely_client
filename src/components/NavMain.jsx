@@ -2,11 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
 import apiHandler from "../api/apiHandler";
+import {Link}from "react-router-dom";
+import logo from "./../pages/images/codely-vector.png"
 
 import "../styles/NavMain.css";
-
 const NavMain = (props) => {
   const { context } = props;
+  console.log("context is", context);
 
   function handleLogout() {
     apiHandler
@@ -20,10 +22,11 @@ const NavMain = (props) => {
   }
   
 
+
   return (
     <nav className="NavMain">
       <NavLink exact to="/">
-        <img src='./codely-vector.png' className ="logo" alt="logo"/>
+        <img src={logo} className="logo" alt="logo"/>
       </NavLink>
       <ul className="nav-list">
         {context.isLoggedIn && (
@@ -34,7 +37,8 @@ const NavMain = (props) => {
               </NavLink>
             </li>
             <li>
-              <p onClick={handleLogout}>Logout</p>
+              <Link to="/main"><p onClick={handleLogout}>Logout</p></Link>
+              <Link to={`/company/${context.user._id}`}><p>Profile</p></Link>
             </li>
           </React.Fragment>
         )}
