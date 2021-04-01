@@ -55,7 +55,7 @@ input{
 
 }
 
-.form .credentials-signup{
+.form-app .credentials-signup{
     display: flex;
    flex-wrap: wrap;
    justify-content: space-between;
@@ -63,7 +63,7 @@ input{
 
 }
 
-form .credentials-signup .input-box-signup{
+.form-app .credentials-signup .input-box-signup{
     margin: 5px 0 5px 0;
     width: 100%;
     
