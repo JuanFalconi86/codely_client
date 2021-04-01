@@ -20,7 +20,7 @@ class Applications extends React.Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:7000/api/applications")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/applications`)
       .then((response) => {
         this.setState({ applications: response.data });
         console.log(response);

@@ -16,10 +16,10 @@ class EditApplications extends Component {
     const getAppId = () => {
       console.log(this.props);
       const id = this.props.match.params.id;
-      return axios.get(`http://localhost:7000/api/applications/${id}`);
+      return axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/applications/${id}`);
     };
     const getTechnologies = () => {
-      return axios.get("http://localhost:7000/api/technologies");
+      return axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/technologies`);
     };
     Promise.all([getAppId(), getTechnologies()]).then((response) => {
       const data = response.data;
@@ -91,7 +91,7 @@ class EditApplications extends Component {
     });
     console.log("BEFORE THE AXIOS", this.state);
     axios
-      .patch(`http://localhost:7000/api/applications/${id}`, formData)
+      .patch(`${process.env.REACT_APP_BACKEND_URL}/api/applications/${id}`, formData)
       //     appName: this.state.appName,
       //     appLogo: this.state.appLogo,
       //     appDescription: this.state.appDescription,

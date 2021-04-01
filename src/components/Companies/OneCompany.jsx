@@ -16,7 +16,7 @@ class OneCompany extends Component {
       
         axios
        
-            .get(`http://localhost:7000/api/company-profile/${id}`, {withCredentials: true})
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/company-profile/${id}`, {withCredentials: true})
 
             .then((response) => {
                 console.log("Response Data", response);

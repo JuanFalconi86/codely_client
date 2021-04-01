@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Main from "../../pages/Main"
 
 class ApplicationDetails extends React.Component {
     state = {
@@ -12,7 +13,7 @@ class ApplicationDetails extends React.Component {
       console.log("HERE IS THE ID", id)
 
       axios
-        .get(`http://localhost:7000/api/applications/${id}`, {
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/applications/${id}`, {
           withCredentials: true
         })
         .then((response) => {
@@ -31,7 +32,7 @@ class ApplicationDetails extends React.Component {
 
     handleDelete = (id) => {
       axios
-        .delete(`http://localhost:7000/api/applications/${id}`, {
+        .delete(`${process.env.REACT_APP_BACKEND_URL}/api/applications/${id}`, {
           withCredentials: true
         })
         .then((response) => {
@@ -59,7 +60,7 @@ class ApplicationDetails extends React.Component {
       //   console.log("hello")
    
         axios
-        .get(`http://localhost:7000/api/applications/${id}`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/applications/${id}`)
         .then((response) => {
           this.setState({ application: response.data });
           console.log("HERE IS THE RESPONSE", response)
@@ -86,7 +87,12 @@ class ApplicationDetails extends React.Component {
        }
 
       return (
-        <div style={{ padding: "12px 12px 0 12px"}}>
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
+         <div>
+        <Main /> 
+        </div> 
+        <div>
+        <div style={{ padding: "12px 12px 0 12px", minWidth:"50vw"}}>
             <div
               style={{
                 display: "flex",
@@ -123,6 +129,8 @@ class ApplicationDetails extends React.Component {
       <br/>
       <button style={{fontSize:"1em"}} onClick={() => this.handleDelete(this.state.application._id)}>Delete This App</button>
             </div>
+          </div>
+          </div>
           </div>
       );
     }

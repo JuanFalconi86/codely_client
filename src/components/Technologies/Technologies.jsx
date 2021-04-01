@@ -11,7 +11,7 @@ class Technologies extends React.Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:7000/api/technologies")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/technologies`)
       .then((response) => {
         this.setState({ technologies: response.data });
         console.log(response);

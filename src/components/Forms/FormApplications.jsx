@@ -17,7 +17,7 @@ class FormApplications extends Component {
   // ICI, JE FAIS UN CALL AXIOS POUR RÉCUPÉRER LA LISTE DES TECHNOLOGIES
   componentDidMount() {
     axios
-      .get("http://localhost:7000/api/technologies")
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/technologies`)
       .then((response) => {
         this.setState({ technologyList: response.data });
         console.log(response.data);
@@ -72,7 +72,7 @@ class FormApplications extends Component {
     });  // on définit les keys qu'on va envoyer lors du submit: pourquoi on fait ça ? parce que technology ==> on envoi la LISTE des technologies
     
     axios
-      .post("http://localhost:7000/api/application/create", formData)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/application/create`, formData)
       .then((response) => {
         this.setState({
           appName: "",
