@@ -15,31 +15,59 @@ class EditApplications extends Component {
   };
 
   componentDidMount() {
+
+const getAppId =() => {
     console.log(this.props);
     const id = this.props.match.params.id;
-
-    axios
+    return axios
       .get(`http://localhost:7000/api/applications/${id}`)
-      .then((response) => {
-        const data = response.data;
-        this.setState({
-          appName: data.appName,
-          appLogo: data.appLogo,
-          appDescription: data.appDescription,
-          technology: data.technology,
-          technologySelected: data.technologySelected,
-          appCategory: data.appCategory,
-        });
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error, "NOSE BLEEEEED");
-      });
-  }
+      
+}
 
-  //   handleChange = (event) => {
-  //     this.setState({ [event.target.name]: event.target.value });
-  //   };
+const getTechnologies = () => {
+    return axios
+      .get("http://localhost:7000/api/technologies")
+      
+}
+
+Promise.all([getAppId(), getTechnologies()])
+.then((response) =>{
+    const data = response.data;
+    // console.log(response)
+    console.log( response)
+    this.setState({
+      appName: response[0].data.appName,
+      appLogo: response[0].data.appLogo,
+      appDescription: response[0].data.appDescription,
+      technology: response[1].data,
+      technologySelected: response[1].data.technologySelected,
+      appCategory: response[0].data.appCategory,
+    });
+    console.log({ technology: response[1].data.technologySelected });
+})}
+//     console.log(this.props);
+//     const id = this.props.match.params.id;
+
+//     axios
+//       .get(`http://localhost:7000/api/applications/${id}`)
+//       .then((response) => {
+//         const data = response.data;
+//         this.setState({
+//           appName: data.appName,
+//           appLogo: data.appLogo,
+//           appDescription: data.appDescription,
+//           technology: data.technology,
+//           technologySelected: data.technologySelected,
+//           appCategory: data.appCategory,
+//         });
+//         console.log(data);
+//       })
+//       .catch((error) => {
+//         console.log(error, "NOSE BLEEEEED");
+//       });
+//   }
+
+  
   //FONCTION POUR HANDLE CHANGE LES INPUTS DU FORMULAIRE
   handleChange = (event) => {
     if (event.target.name === "technology") {
@@ -56,6 +84,7 @@ class EditApplications extends Component {
 
   //FONCTION POUR UPDATE LE STATE DU LOGO AVEC UN FICHIER IMAGE CHOISI DU LOCAL:
   handleLogoUpload = (event) => {
+    // console.log(event.target.files[0]);
     console.log(event.target.files[0]);
     this.setState({
       appLogo: event.target.files[0],
@@ -67,16 +96,20 @@ class EditApplications extends Component {
   editSubmit = (event) => {
     event.preventDefault();
     const id = this.props.match.params.id;
+    const formData = new FormData();
+    buildFormData(formData, this.state);
+    console.log("BEFORE THE AXIOS", this.state)
     axios
-      .patch(`http://localhost:7000/api/applications/${id}`, {
-        appName: this.state.appName,
-        appLogo: this.state.appLogo,
-        appDescription: this.state.appDescription,
-        technology: this.state.technologySelected,
-        appCategory: this.state.appCategory,
-      })
+      .patch(`http://localhost:7000/api/applications/${id}`,formData)
+    //     appName: this.state.appName,
+    //     appLogo: this.state.appLogo,
+    //     appDescription: this.state.appDescription,
+    //     technology: this.state.technologySelected,
+    //     appCategory: this.state.appCategory,
+    //   })
       .then((response) => {
-        this.props.history.push("/");
+          console.log("AFTER THE AXIOS PATCH", this.state);
+        this.props.history.push("/main");
       })
       .catch((error) => {
         console.log(error);
@@ -103,10 +136,10 @@ class EditApplications extends Component {
           <label htmlFor="appLogo"> Logo</label> <br />
           <input
             id="appLogo"
-            type="text"
+            type="file"
             name="appLogo"
-            onChange={this.handleChange}
-            value={this.state.appLogo}
+            onChange={this.handleLogoUpload}
+            // value={this.state.appLogo}
           />
           <br />
           <label htmlFor="appDescription">Description</label> <br />
@@ -124,7 +157,7 @@ class EditApplications extends Component {
             name="technology"
             id="technology"
             onChange={this.handleChange}
-            // value={this.state.technologySelected}
+            value={this.state.technologySelected}
             multiple={true}
           >
             {this.state.technology.map((oneTechnology) => {
@@ -141,8 +174,8 @@ class EditApplications extends Component {
           <select
             name="appCategory"
             id="appCategory"
-            onChange={this.handleLogoUpload}
-            // value={this.state.appCategory}
+            onChange={this.handleChange}
+            value={this.state.appCategory}
             single="true"
           >
             <option value="Books"> Books</option>
@@ -171,7 +204,7 @@ class EditApplications extends Component {
           {/* <label htmlFor="appCategory">App Category</label> <br/>
           <input type="text" name="appCategory" onChange={this.handleChange} value={this.state.appCategory}/> <br/> */}
           <br />
-          <button>Create new App</button>
+          <button>Edit App</button>
         </form>
       </div>
     );
