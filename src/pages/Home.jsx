@@ -42,14 +42,7 @@ class Home extends React.Component {
  
 
         {/* This section will contain more information about the problems that Codely solves */}
-       
-			<div>
-      <section className="solutions">
-          <div className="solutions-heading">
-            <h2>How Codely help you as a tech job seeker?</h2>
-          </div>
-        </section>
-      </div>
+      
     
 			</div>
 		);

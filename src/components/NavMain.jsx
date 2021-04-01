@@ -24,20 +24,26 @@ const NavMain = (props) => {
 
 
   return (
-    <nav className="NavMain">
+    <nav className="NavMain" style={{backgroundColor:"rgba(228, 239, 249, 0.91)"}}>
       <NavLink exact to="/">
         <img src={logo} className="logo" alt="logo"/>
       </NavLink>
       <ul className="nav-list">
         {context.isLoggedIn && (
           <React.Fragment>
+            
             <li>
-              <NavLink to="/profile">
+              <Link to="/application/create"><p>Create App</p></Link>
+              </li>
+              <li>
+              <p>
                 {context.user && context.user.email}
-              </NavLink>
+              </p>
             </li>
-            <li>
+              <li>
               <Link to="/main"><p onClick={handleLogout}>Logout</p></Link>
+              </li>
+              <li>
               <Link to={`/company/${context.user._id}`}><p>Profile</p></Link>
             </li>
           </React.Fragment>

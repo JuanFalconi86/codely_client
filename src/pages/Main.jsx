@@ -58,7 +58,7 @@ addId = (HandleSelectTechnology) => {
     return (
       <div
         style={{
-          border: "1px solid #C4C4C4",
+          borderRight: "1px solid #C4C4C4",
           borderTop: "none",
           borderBottom: "none",
         }}
@@ -70,7 +70,7 @@ addId = (HandleSelectTechnology) => {
           <Technologies fetch={this.fetchData} greet={this.onGreet} />
         </div>
         
-          <div style={{ borderRight: "1px solid #C4C4C4" }}>
+          <div>
          
             <Applications  arrayIds={this.state.arrayId}/>
           </div>
@@ -81,7 +81,6 @@ addId = (HandleSelectTechnology) => {
               padding: "12px",
               width: "80%",
             }} */}
-          >
             {/* <Route
               exact
               path="/applications/:id"

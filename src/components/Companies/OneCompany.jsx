@@ -30,9 +30,6 @@ class OneCompany extends Component {
         
     }
 
-    
-
-
 
     render() {
 
@@ -40,21 +37,28 @@ class OneCompany extends Component {
             return <div>Loading the application details...</div>;
                }
         return (
-            <div>
-
-                <h1>I'm here</h1>
-                <p>{this.state.company.companyName}</p>
-                <p>{this.state.company.companyIndustry}</p>
-                <p><img src={this.state.company.representativePhotoUrl} alt="company"/></p>
-                <p>{this.state.company.firstName}</p>
-                <p>{this.state.company.lastName}</p>
+            <div style={{display:"flex", justifyContent:"center"}}>
+            <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+                <br/>
+                <h1>{this.state.company.firstName} {this.state.company.lastName}'s Profile</h1>
                 <p>{this.state.company.email}</p>
-                <p><img src={this.state.company.companyLogoUrl} alt="logo"/></p>
+                <br/>
+                <p><img style={{height:"200px"}} src={this.state.company.representativePhotoUrl} alt="company"/></p><br/>
+
+                <div style={{display:"flex", flexDirection:"row"}}>
+                
+                <div>
+                <p>Company: {this.state.company.companyName}</p>
+                </div>
+                <div style={{paddingLeft:"10px"}}>
+                <img style={{height:"20px"}} src={this.state.company.companyLogoUrl} alt="logo"/></div>
+                </div>
+                <p>Position: {this.state.company.representativePosition}</p>
+                <p>{this.state.company.companyIndustry}</p>
+                
                 <p>{this.state.company.apps.map((e) => {
                     return (
                         e.appName
-                    
-                        
                     )
                 })}</p>
                 {/* {this.state.company.map((companyDetail) => (
@@ -70,6 +74,7 @@ class OneCompany extends Component {
 
                     </div>
                 ))} */}
+            </div>
             </div>
         )
     }
