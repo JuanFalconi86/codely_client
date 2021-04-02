@@ -3,6 +3,8 @@ import { withRouter, Redirect } from "react-router-dom";
 import apiHandler from "../../api/apiHandler";
 import { withUser } from "../Auth/withUser";
 
+import './../../styles/signin.css'
+
 class FormSignin extends Component {
   state = {
     email: "",
@@ -37,13 +39,28 @@ class FormSignin extends Component {
     }
 
     return (
-      <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
-        <label htmlFor="email">Email</label>
+      <div className="signin-wrapper">
+        <div className="form-wrapper-signin">
+          <header className="title-signin">
+            <h1>Log In</h1> <br />
+          </header>
+      <form onChange={this.handleChange} onSubmit={this.handleSubmit} className="form">
+        <div className="credentials-signin">
+          <div className="input-box-signin">
+        <label htmlFor="email" className="label">Email</label>
         <input type="email" id="email" name="email" />
-        <label htmlFor="password">Password</label>
+        </div >
+        <div className="input-box-signin">
+        <label htmlFor="password" className="label">Password</label>
         <input type="password" id="password" name="password" />
+        </div>
+        </div>
+        <div className="createAccount">
         <button>Submit</button>
+        </div>
       </form>
+      </div>
+      </div>
     );
   }
 }
